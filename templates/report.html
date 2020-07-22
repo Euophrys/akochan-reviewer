@@ -8,13 +8,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>牌譜検討</title>
+  <title>Replay Examination</title>
 </head>
 
 <body>
-  <h1>目次</h1>
+  <h1>Game Summary</h1>
   <details open class="collapse">
-    <summary></summary>
+    <summary>Round Outcomes</summary>
     <div class="kyoku-toc">
       <ol class="kyoku-list">
         {%- for item in kyokus -%}
@@ -82,8 +82,8 @@
 
       {%- if splited_logs is defined -%}
         <div class="sticky" style="z-index: {{ 15 + loop.index0 }}">
-          <details open class="collapse">
-            <summary>牌譜ビューア</summary>
+          <details class="collapse">
+            <summary>Replay Viewer</summary>
             <iframe
               src="https://tenhou.net/5/?tw={{ target_actor }}#json={{ splited_logs[loop.index0] | json_encode() }}"
               class="tenhou"
@@ -98,11 +98,11 @@
 
       {%- for entry in item.entries -%}
         <details open class="collapse">
-          <summary>{{ entry.junme }} 巡</summary>
+          <summary>Turn {{ entry.junme }}</summary>
           {{- macros::render_tehai_state(entry=entry, target_actor=target_actor) -}}
           <ul>
             <li>
-              akochan の最善手：
+              akochan's decision:
               <ul>
                 <li>
                   {{- macros::render_action(action=entry.expected) -}}
@@ -110,7 +110,7 @@
               </ul>
             </li>
             <li>
-              自家：
+              Your decision:
               <ul>
                 <li>
                   {{- macros::render_action(action=entry.actual) -}}
@@ -124,11 +124,11 @@
               <table border="1" cellspacing="0" cellpadding="0" class="stat">
                 <thead>
                   <tr>
-                    <th></th>
-                    <th>{% if use_ranking_exp %}最終順位{% else %}pt {% endif %}期待値</th>
-                    <th>放銃率 (%)</th>
-                    <th>放銃後の{% if use_ranking_exp %}最終順位{% else %} pt {% endif %}期待値</th>
-                    <th>通った後の{% if use_ranking_exp %}最終順位{% else %} pt {% endif %}期待値</th>
+                    <th>Decision</th>
+                    <th>{% if use_ranking_exp %}Placement{% else %}pt{% endif %} EV</th>
+                    <th>Deal-in (%)</th>
+                    <th>Post-Deal-in {% if use_ranking_exp %}Placement{% else %}pt{% endif %} EV</th>
+                    <th>Tile Passes {% if use_ranking_exp %}Placement{% else %}pt{% endif %} EV</th>
                   </tr>
                 </thead>
                 <tbody>

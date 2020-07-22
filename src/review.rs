@@ -159,7 +159,7 @@ pub fn review(
                 continue;
             }
 
-            Event::Dahai { actor, .. } | Event::Kakan { actor, .. } => {
+            Event::Dahai { actor, .. } => {
                 if actor == target_actor {
                     continue;
                 }

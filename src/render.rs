@@ -28,8 +28,8 @@ static TEMPLATES: Lazy<Tera> = Lazy::new(|| {
 });
 
 fn kyoku_to_string(args: &HashMap<String, Value>) -> tera::Result<Value> {
-    const BAKAZE_KANJI: &[&str] = &["東", "南", "西", "北"];
-    const NUM_KANJI: &[&str] = &["一", "二", "三", "四"];
+    const BAKAZE_KANJI: &[&str] = &["East", "South", "West", "North"];
+    const NUM_KANJI: &[&str] = &["1", "2", "3", "4"];
 
     let kyoku = if let Some(Value::Number(num)) = args.get("kyoku") {
         usize::try_from(num.as_u64().unwrap_or(0)).unwrap_or(0)
@@ -43,12 +43,12 @@ fn kyoku_to_string(args: &HashMap<String, Value>) -> tera::Result<Value> {
         0
     };
 
-    let ret = BAKAZE_KANJI[kyoku / 4].to_owned() + NUM_KANJI[kyoku % 4] + "局";
+    let ret = BAKAZE_KANJI[kyoku / 4].to_owned() + " " + NUM_KANJI[kyoku % 4];
 
     if honba == 0 {
         Ok(Value::String(ret))
     } else {
-        Ok(Value::String(ret + " " + &honba.to_string() + " 本場"))
+        Ok(Value::String(ret + "-" + &honba.to_string()))
     }
 }
 
